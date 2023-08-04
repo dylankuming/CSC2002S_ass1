@@ -51,7 +51,7 @@ public class TerrainArea {
 			return heights[x][y]; //don't recalculate if done before
 		}
 		/* Calculate the coordinates of the point in the ranges */
-		double x_coord = xmin + ( (xmax - xmin) / rows ) * x;    //maps where we are on the grid to where it is on the terrain
+		double x_coord = xmin + ( (xmax - xmin) / rows ) * x;
 		double y_coord = ymin + ( (ymax - ymin) / columns ) * y;
 		/* Compute function value */
 		double value = -2 * Math.sin(x_coord) * Math.cos(y_coord/2.0) + Math.log( Math.abs(y_coord - Math.PI*2) );
@@ -69,7 +69,7 @@ public class TerrainArea {
 		return fixed_point;
 	}
 
-	//work out where to go next - move downhill (stay or move left, right, up, down)
+	//work out where to go next - move downhill
 	Direction next_step( int x, int y) {
 		Direction climb_direction =Direction.STAY_HERE;
 		int height;

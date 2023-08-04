@@ -23,7 +23,7 @@ class MonteCarloMinimization{
 		endTime=System.currentTimeMillis(); 
 	}
 	
-    public static void main(String[] args)  {
+     public static void main(String[] args)  {
 
     	int rows, columns; //grid size
     	double xmin, xmax, ymin, ymax; //x and y terrain limits
@@ -39,21 +39,21 @@ class MonteCarloMinimization{
     		System.exit(0);
     	}*/
     	/* Read argument values */
-    	/*rows =Integer.parseInt( args[0] );
-    	columns = Integer.parseInt( args[1] );
-    	xmin = Double.parseDouble(args[2] );
-    	xmax = Double.parseDouble(args[3] );
-    	ymin = Double.parseDouble(args[4] );
-    	ymax = Double.parseDouble(args[5] );
-    	searches_density = Double.parseDouble(args[6] );*/
+    	// rows = Integer.parseInt(args[0]);
+    	// columns = Integer.parseInt(args[1]);
+    	// xmin = Double.parseDouble(args[2]);
+    	// xmax = Double.parseDouble(args[3]);
+    	// ymin = Double.parseDouble(args[4]);
+    	// ymax = Double.parseDouble(args[5]);
+    	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 10;
-    	columns = 10;
-    	xmin = -50;
-    	xmax = 50;
-    	ymin = -10;
-    	ymax = 100;
-    	searches_density = 0.5;
+        rows = 10000;
+    	columns = 10000;
+    	xmin = 0;
+    	xmax = 1000;
+    	ymin = 0;
+    	ymax =1000;
+    	searches_density = 0.25;
   
     	if(DEBUG) {
     		/* Print arguments */
@@ -99,6 +99,8 @@ class MonteCarloMinimization{
     		terrain.print_heights();
     		terrain.print_visited();
     	}
+
+		
     	
 		System.out.printf("Run parameters\n");
 		System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);

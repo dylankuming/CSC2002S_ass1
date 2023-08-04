@@ -28,7 +28,7 @@ public class Search {
 		this.stopped = false;
 	}
 	
-	public int find_valleys() {	 //stores global minimums
+	public int find_valleys() {	
 		int height=Integer.MAX_VALUE;
 		Direction next = Direction.STAY_HERE;
 		while(terrain.visited(pos_row, pos_col)==0) { // stop when hit existing path

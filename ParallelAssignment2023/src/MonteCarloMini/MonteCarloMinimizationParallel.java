@@ -8,8 +8,12 @@ package MonteCarloMini;
  * developed by Arturo Gonzalez Escribano  (Universidad de Valladolid 2021/2022)
  */
 import java.util.Random;
+import java.util.concurrent.ForkJoinPool;
 
-class MonteCarloMinimization{
+class MonteCarloMinimizationParallel{
+
+	static final ForkJoinPool FJPool = new ForkJoinPool();
+
 	static final boolean DEBUG=false;
 	
 	static long startTime = 0;
@@ -21,6 +25,10 @@ class MonteCarloMinimization{
 	}
 	private static void tock(){
 		endTime=System.currentTimeMillis(); 
+	}
+
+	static Integer[] search(Search[] searchArr){
+		return  (Integer[]) FJPool.invoke(new SearchParallel(searchArr, 0, searchArr.length));
 	}
 	
     public static void main(String[] args)  {
@@ -39,21 +47,21 @@ class MonteCarloMinimization{
     		System.exit(0);
     	}*/
     	/* Read argument values */
-    	/*rows =Integer.parseInt( args[0] );
-    	columns = Integer.parseInt( args[1] );
-    	xmin = Double.parseDouble(args[2] );
-    	xmax = Double.parseDouble(args[3] );
-    	ymin = Double.parseDouble(args[4] );
-    	ymax = Double.parseDouble(args[5] );
-    	searches_density = Double.parseDouble(args[6] );*/
+    	// rows = Integer.parseInt(args[0]);
+    	// columns = Integer.parseInt(args[1]);
+    	// xmin = Double.parseDouble(args[2]);
+    	// xmax = Double.parseDouble(args[3]);
+    	// ymin = Double.parseDouble(args[4]);
+    	// ymax = Double.parseDouble(args[5]);
+    	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 10;
-    	columns = 10;
-    	xmin = -50;
-    	xmax = 50;
-    	ymin = -10;
-    	ymax = 100;
-    	searches_density = 0.5;
+		rows = 10000;
+    	columns = 10000;
+    	xmin = 0;
+    	xmax = 1000;
+    	ymin = 0;
+    	ymax =1000;
+    	searches_density = 0.25;
   
     	if(DEBUG) {
     		/* Print arguments */
@@ -80,17 +88,10 @@ class MonteCarloMinimization{
     	tick();
     	
     	//all searches
-    	int min=Integer.MAX_VALUE;
     	int local_min=Integer.MAX_VALUE;
     	int finder =-1;
-    	for  (int i=0;i<num_searches;i++) {
-    		local_min=searches[i].find_valleys();
-    		if((!searches[i].isStopped())&&(local_min<min)) { //don't look at  those who stopped because hit exisiting path
-    			min=local_min;
-    			finder=i; //keep track of who found it
-    		}
-    		if(DEBUG) System.out.println("Search "+searches[i].getID()+" finished at  "+local_min + " in " +searches[i].getSteps());
-    	}
+    	Integer[] results = search(searches);
+		int min = results[0];
    		//end timer
    		tock();
    		
@@ -99,6 +100,8 @@ class MonteCarloMinimization{
     		terrain.print_heights();
     		terrain.print_visited();
     	}
+
+		
     	
 		System.out.printf("Run parameters\n");
 		System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
@@ -113,8 +116,8 @@ class MonteCarloMinimization{
 		System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
 	
 		/* Results*/
-		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(searches[finder].getPos_row()), terrain.getYcoord(searches[finder].getPos_col()) );
-				
+		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(results[1]), terrain.getYcoord(results[2]) );
+		System.out.print(-2 * Math.sin(-5609) * Math.cos(11/2.0) + Math.log( Math.abs(-5609 - Math.PI*2) ))	;	
     	
     }
 }
