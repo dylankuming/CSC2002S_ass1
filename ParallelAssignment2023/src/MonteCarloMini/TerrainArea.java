@@ -1,8 +1,6 @@
 package MonteCarloMini;
 
-import java.lang.Math.*;
-
-import MonteCarloMini.Search.Direction;
+import MonteCarloMini.SearchParallel.Direction;
 
 public class TerrainArea {
 	
@@ -43,8 +41,9 @@ public class TerrainArea {
 	 
 	 void mark_visited(int x, int y, int searcherID) { 
 		 visit[x][y]=searcherID;
-		 grid_points_visited++;}
-	
+		 grid_points_visited++;
+		 //System.out.println("Grid Coords: (" + x + ", " + y + ")\nTerrain Coords: (" + getXcoord(x) + ", " + getYcoord(y) + ")\n");
+	 }
 	 //evaluate function at a grid point
 	int get_height( int x, int y) {
 		if (heights[x][y]!=Integer.MAX_VALUE) {
@@ -61,6 +60,7 @@ public class TerrainArea {
 		tmp=100.0*Math.pow(tmp,2);
 		double tmp2=Math.pow(1-x_coord,2);
 		double value = tmp2+tmp; 
+		//System.out.println(value + " at (" + x_coord + ", " + y_coord + ")");
 	
 		/* Transform to fixed point precision */
 		int fixed_point = (int)( PRECISION * value );
@@ -76,6 +76,7 @@ public class TerrainArea {
 		int local_min= get_height(x, y);
 		if ( x > 0 ) {
 			height=get_height(x-1, y);
+			//System.out.println("Height (Left): " + height);
 			if (height<local_min) {
 				local_min=height;
 				climb_direction = Direction.LEFT;
@@ -83,6 +84,7 @@ public class TerrainArea {
 		}
 		if ( x < (rows-1) ) {
 			height=get_height(x+1, y);
+			//System.out.println("Height (Right): " + height);
 			if (height<local_min) {
 				local_min=height;
 				climb_direction = Direction.RIGHT;
@@ -90,6 +92,7 @@ public class TerrainArea {
 		}
 		if ( y > 0 ) {
 			height=get_height(x, y-1);
+			//System.out.println("Height (Up): " + height);
 			if (height<local_min) {
 				local_min=height;
 				climb_direction = Direction.UP;
@@ -97,6 +100,7 @@ public class TerrainArea {
 		}
 		if ( y < (columns-1) ) {
 			height=get_height(x, y+1);
+			//System.out.println("Height (Down): " + height);
 			if (height<local_min) {
 				local_min=height;
 				climb_direction = Direction.DOWN;

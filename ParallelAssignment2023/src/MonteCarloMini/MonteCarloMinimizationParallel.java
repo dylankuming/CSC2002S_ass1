@@ -27,10 +27,6 @@ class MonteCarloMinimizationParallel{
 		endTime=System.currentTimeMillis(); 
 	}
 
-	static Integer[] search(Search[] searchArr){
-		return (Integer[]) FJPool.invoke(new SearchParallel(searchArr, 0, searchArr.length));
-	}
-	
     public static void main(String[] args)  {
 
     	int rows, columns; //grid size
@@ -55,13 +51,13 @@ class MonteCarloMinimizationParallel{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 1000;
-    	columns =500;
-    	xmin = -2000;
-    	xmax = 3000;
-    	ymin = -3000;
-    	ymax =20000;
-    	searches_density = 0.5;
+		rows = 10000;
+    	columns = 10000;
+    	xmin = -10;
+    	xmax = 10;
+    	ymin = -10;
+    	ymax =10;
+    	searches_density = 0.25;
   
     	if(DEBUG) {
     		/* Print arguments */
@@ -74,14 +70,21 @@ class MonteCarloMinimizationParallel{
     	// Initialize 
     	terrain = new TerrainArea(rows, columns, xmin,xmax,ymin,ymax);
     	num_searches = (int)( rows * columns * searches_density );
-    	searches= new Search [num_searches];
-    	for (int i=0;i<num_searches;i++) 
-    		searches[i]=new Search(i+1, rand.nextInt(rows),rand.nextInt(columns),terrain);
+    	int[] rowPositions = new int[num_searches];
+		int[] colPositions = new int[num_searches];
+		int[] steps = new int[num_searches];
+		boolean[] stopped = new boolean[num_searches];
+		int[] finderID = new int[num_searches];
+    	for (int i=0;i<num_searches;i++){
+			rowPositions[i] = rand.nextInt(rows);
+			colPositions[i] = rand.nextInt(columns);
+			finderID[i] = i+1;
+		}
     	
       	if(DEBUG) {
     		/* Print initial values */
     		System.out.printf("Number searches: %d\n", num_searches);
-    		//terrain.print_heights();
+    		terrain.print_heights();
     	}
     	
     	//start timer
@@ -90,7 +93,7 @@ class MonteCarloMinimizationParallel{
     	//all searches
     	int local_min=Integer.MAX_VALUE;
     	int finder =-1;
-    	Integer[] results = search(searches);
+    	int[] results =  FJPool.invoke(new SearchParallel(terrain, rowPositions, colPositions, steps, stopped, 0, num_searches));
 		int min = results[0];
    		//end timer
    		tock();
@@ -117,7 +120,6 @@ class MonteCarloMinimizationParallel{
 	
 		/* Results*/
 		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(results[1]), terrain.getYcoord(results[2]) );
-		System.out.print(-2 * Math.sin(-5609) * Math.cos(11/2.0) + Math.log( Math.abs(-5609 - Math.PI*2) ))	;	
-    	
+    	//terrain.print_visited();
     }
 }
