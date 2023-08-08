@@ -23,7 +23,7 @@ class MonteCarloMinimization{
 		endTime=System.currentTimeMillis(); 
 	}
 	
-     public static void main(String[] args)  {
+    public static void main(String[] args)  {
 
     	int rows, columns; //grid size
     	double xmin, xmax, ymin, ymax; //x and y terrain limits
@@ -34,26 +34,29 @@ class MonteCarloMinimization{
     	Search [] searches;		// Array of searches
     	Random rand = new Random();  //the random number generator
     	
-    	/*if (args.length!=7) {  
-    		System.out.println("Incorrect number of command line arguments provided.");   	
-    		System.exit(0);
-    	}*/
-    	/* Read argument values */
-    	// rows = Integer.parseInt(args[0]);
-    	// columns = Integer.parseInt(args[1]);
-    	// xmin = Double.parseDouble(args[2]);
-    	// xmax = Double.parseDouble(args[3]);
-    	// ymin = Double.parseDouble(args[4]);
-    	// ymax = Double.parseDouble(args[5]);
-    	// searches_density = Double.parseDouble(args[6]);
+    	// if (args.length!=7) {  
+    	// 	System.out.println("Incorrect number of command line arguments provided.");   	
+    	// 	System.exit(0);
+    	// }
 
-        rows = 10000;
-    	columns = 10000;
-    	xmin = 0;
-    	xmax = 1000;
-    	ymin = 0;
-    	ymax =1000;
-    	searches_density = 0.25;
+    	// /* Read argument values */
+    	// rows =Integer.parseInt( args[0] );
+    	// columns = Integer.parseInt( args[1] );
+    	// xmin = Double.parseDouble(args[2] );
+    	// xmax = Double.parseDouble(args[3] );
+    	// ymin = Double.parseDouble(args[4] );
+    	// ymax = Double.parseDouble(args[5] );
+    	// searches_density = Double.parseDouble(args[6] );
+
+		rows = 1000;
+    	columns =500;
+    	xmin = -2000;
+    	xmax = 3000;
+    	ymin = -3000;
+    	ymax =20000;
+    	searches_density = 0.5;
+
+		
   
     	if(DEBUG) {
     		/* Print arguments */
@@ -99,8 +102,6 @@ class MonteCarloMinimization{
     		terrain.print_heights();
     		terrain.print_visited();
     	}
-
-		
     	
 		System.out.printf("Run parameters\n");
 		System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);

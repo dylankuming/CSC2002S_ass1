@@ -11,7 +11,7 @@ public class SearchParallel extends RecursiveTask{
     private int xMin;
     private int yMin;
 
-    private static int SEQUENTIAL_CUTOFF = 800;
+    private static int SEQUENTIAL_CUTOFF = 1000;
 
    public SearchParallel(Search[] searchArray, int low, int high){
         this.searchArray = searchArray;

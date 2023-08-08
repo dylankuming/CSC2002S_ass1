@@ -28,7 +28,7 @@ class MonteCarloMinimizationParallel{
 	}
 
 	static Integer[] search(Search[] searchArr){
-		return  (Integer[]) FJPool.invoke(new SearchParallel(searchArr, 0, searchArr.length));
+		return (Integer[]) FJPool.invoke(new SearchParallel(searchArr, 0, searchArr.length));
 	}
 	
     public static void main(String[] args)  {
@@ -55,13 +55,13 @@ class MonteCarloMinimizationParallel{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 10000;
-    	columns = 10000;
-    	xmin = 0;
-    	xmax = 1000;
-    	ymin = 0;
-    	ymax =1000;
-    	searches_density = 0.25;
+		rows = 1000;
+    	columns =500;
+    	xmin = -2000;
+    	xmax = 3000;
+    	ymin = -3000;
+    	ymax =20000;
+    	searches_density = 0.5;
   
     	if(DEBUG) {
     		/* Print arguments */
