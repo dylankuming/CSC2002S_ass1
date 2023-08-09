@@ -51,13 +51,13 @@ class MonteCarloMinimizationParallel{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 10000;
-    	columns = 10000;
+		rows = 1000;
+    	columns = 1000;
     	xmin = -10;
     	xmax = 10;
     	ymin = -10;
-    	ymax =10;
-    	searches_density = 0.25;
+    	ymax = 10;
+    	searches_density = 0.5;
   
     	if(DEBUG) {
     		/* Print arguments */
@@ -106,20 +106,20 @@ class MonteCarloMinimizationParallel{
 
 		
     	
-		System.out.printf("Run parameters\n");
-		System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
-		System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
-		System.out.printf("\t Search density: %f (%d searches)\n", searches_density,num_searches );
+		// System.out.printf("Run parameters\n");
+		// System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
+		// System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
+		// System.out.printf("\t Search density: %f (%d searches)\n", searches_density,num_searches );
 
 		/*  Total computation time */
 		System.out.printf("Time: %d ms\n",endTime - startTime );
-		int tmp=terrain.getGrid_points_visited();
-		System.out.printf("Grid points visited: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
-		tmp=terrain.getGrid_points_evaluated();
-		System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
+		// int tmp=terrain.getGrid_points_visited();
+		// System.out.printf("Grid points visited: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
+		// tmp=terrain.getGrid_points_evaluated();
+		// System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
 	
-		/* Results*/
-		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(results[1]), terrain.getYcoord(results[2]) );
-    	//terrain.print_visited();
+		// /* Results*/
+		// System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(results[1]), terrain.getYcoord(results[2]) );
+    	// //terrain.print_visited();
     }
 }
