@@ -47,7 +47,7 @@ class MonteCarloMinimization{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 1000;
+		rows = 10000;
     	columns = 1000;
     	xmin = -10;
     	xmax = 10;
