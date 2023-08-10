@@ -10,6 +10,8 @@ package MonteCarloMini;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 
+import MonteCarloMini.SearchParallel.Direction;
+
 class MonteCarloMinimizationParallel{
 
 	static final ForkJoinPool FJPool = new ForkJoinPool();
@@ -34,8 +36,7 @@ class MonteCarloMinimizationParallel{
     	TerrainArea terrain;  //object to store the heights and grid points visited by searches
     	double searches_density;	// Density - number of Monte Carlo  searches per grid position - usually less than 1!
 
-     	int num_searches;		// Number of searches
-    	Search [] searches;		// Array of searches
+     	int num_searches;	// Array of searches
     	Random rand = new Random();  //the random number generator
     	
     	/*if (args.length!=7) {  
@@ -51,12 +52,12 @@ class MonteCarloMinimizationParallel{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 1000;
-    	columns = 1000;
+		rows = 9000;
+    	columns = 5000;
     	xmin = -10;
     	xmax = 10;
     	ymin = -10;
-    	ymax = 10;
+    	ymax =10;
     	searches_density = 0.5;
   
     	if(DEBUG) {
@@ -70,16 +71,7 @@ class MonteCarloMinimizationParallel{
     	// Initialize 
     	terrain = new TerrainArea(rows, columns, xmin,xmax,ymin,ymax);
     	num_searches = (int)( rows * columns * searches_density );
-    	int[] rowPositions = new int[num_searches];
-		int[] colPositions = new int[num_searches];
-		int[] steps = new int[num_searches];
-		boolean[] stopped = new boolean[num_searches];
-		int[] finderID = new int[num_searches];
-    	for (int i=0;i<num_searches;i++){
-			rowPositions[i] = rand.nextInt(rows);
-			colPositions[i] = rand.nextInt(columns);
-			finderID[i] = i+1;
-		}
+    	SearchInner[] searches = new SearchInner[num_searches];
     	
       	if(DEBUG) {
     		/* Print initial values */
@@ -92,8 +84,11 @@ class MonteCarloMinimizationParallel{
     	
     	//all searches
     	int local_min=Integer.MAX_VALUE;
-    	int finder =-1;
-    	int[] results =  FJPool.invoke(new SearchParallel(terrain, rowPositions, colPositions, steps, stopped, 0, num_searches));
+    	//int finder =-1;
+		for (int i=0; i<num_searches; i++){
+			searches[i] =  new MonteCarloMinimizationParallel(). new SearchInner(i, rand.nextInt(rows), rand.nextInt(columns),terrain);
+		}
+    	int[] results =  FJPool.invoke(new SearchParallel(searches, 0, num_searches));
 		int min = results[0];
    		//end timer
    		tock();
@@ -106,20 +101,96 @@ class MonteCarloMinimizationParallel{
 
 		
     	
-		// System.out.printf("Run parameters\n");
-		// System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
-		// System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
-		// System.out.printf("\t Search density: %f (%d searches)\n", searches_density,num_searches );
+		System.out.printf("Run parameters\n");
+		System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
+		System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
+		System.out.printf("\t Search density: %f (%d searches)\n", searches_density,num_searches );
 
 		/*  Total computation time */
 		System.out.printf("Time: %d ms\n",endTime - startTime );
-		// int tmp=terrain.getGrid_points_visited();
-		// System.out.printf("Grid points visited: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
-		// tmp=terrain.getGrid_points_evaluated();
-		// System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
+		int tmp=terrain.getGrid_points_visited();
+		System.out.printf("Grid points visited: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
+		tmp=terrain.getGrid_points_evaluated();
+		System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
 	
-		// /* Results*/
-		// System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(results[1]), terrain.getYcoord(results[2]) );
-    	// //terrain.print_visited();
+		/* Results*/
+		int i = results[1];
+		int pos_row = searches[i].getPos_row();
+		int pos_col = searches[i].getPos_col();
+		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(pos_row), terrain.getYcoord(pos_col) );
+    	//terrain.print_visited();
     }
+
+	public class SearchInner{
+
+        private int id;				// Searcher identifier
+        private int pos_row, pos_col;	// Position in the grid
+        private int steps; //number of steps to end of search
+        private boolean stopped;			// Did the search hit a previous trail?
+        
+        private TerrainArea terrain;
+
+        public SearchInner(int id, int pos_row, int pos_col, TerrainArea terrain) {
+            this.id = id;
+            this.pos_row = pos_row; //randomly allocated
+            this.pos_col = pos_col; //randomly allocated
+            this.terrain = terrain;
+            this.stopped = false;
+        }
+        
+        public int find_valleys() {	
+            int height=Integer.MAX_VALUE;
+            Direction next = Direction.STAY_HERE;
+            while(terrain.visited(pos_row, pos_col)==0) { // stop when hit existing path
+                height=terrain.get_height(pos_row, pos_col);
+                //System.out.println("Height: " + height);
+                terrain.mark_visited(pos_row, pos_col, id); //mark current position as visited
+                steps++;
+                next = terrain.next_step(pos_row, pos_col);
+                switch(next) {
+                    case STAY_HERE: return height; //found local valley
+                    case LEFT: 
+                        //System.out.println("LEFT");
+                        pos_row--;
+                        break;
+                    case RIGHT:
+                        //System.out.println("RIGHT");
+                        pos_row=pos_row+1;
+                        break;
+                    case UP: 
+                        //System.out.println("UP");
+                        pos_col=pos_col-1;
+                        break;
+                    case DOWN: 
+                        //System.out.println("DOWN");
+                        pos_col=pos_col+1;
+                        break;
+                }
+            }
+            stopped=true;
+            //System.out.println("VALLEY (" + height + ")FOUND AT: " + pos_row + ", " + pos_col + "\n\n");
+            return height;
+        }
+
+        public int getID() {
+            return id;
+        }
+
+        public int getPos_row() {
+            return pos_row;
+        }
+
+        public int getPos_col() {
+            return pos_col;
+        }
+
+        public int getSteps() {
+            return steps;
+        }
+        public boolean isStopped() {
+            return stopped;
+        }
+
+    }
+
 }
