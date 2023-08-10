@@ -52,7 +52,7 @@ class MonteCarloMinimizationParallel{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 9000;
+		rows = 1000;
     	columns = 5000;
     	xmin = -10;
     	xmax = 10;
