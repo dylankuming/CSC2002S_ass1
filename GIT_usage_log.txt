@@ -1,0 +1,68 @@
+C:\Users\dylan\OneDrive - University of Cape Town\UNIVERSITY FILES\Third Year\Semester 2\CSC2002S\ParallelAssignment2023\CSC2002S_ass1>git log
+commit 05e4b4be33324e6aa5f9e8613c40cec4b4f3bc0c (HEAD -> main, origin/main)
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Sun Aug 13 13:14:29 2023 +0200
+
+    final
+
+commit 1ab155edaf77cca25fcd2aa026fa8baf36843503
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Sun Aug 13 13:07:56 2023 +0200
+
+    comments
+
+commit fea8f2239d89e0899b06f43b03c18f48ab2c59b1
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Sun Aug 13 11:30:01 2023 +0200
+
+    makefile
+
+commit 9efbb58960eded9d26a7c3834a23d7f941e52aa6
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Thu Aug 10 22:40:31 2023 +0200
+
+    searchParallel
+
+commit af26c8100523933126578623c785401e0a072b1d
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Thu Aug 10 09:52:53 2023 +0200
+
+    fix array issue
+
+commit b6d4d36d6bd4305a31e7a924d68b35851af1086a
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Wed Aug 9 17:46:07 2023 +0200
+
+    SearchParalell
+
+commit a14ad1fcbb99e2199c57277eaefd225aef17ee7c
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Wed Aug 9 16:04:11 2023 +0200
+
+    code error fix
+
+commit 815780065f7fd69aae6af5d6791cc8ad26ef6324
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Tue Aug 8 18:24:54 2023 +0200
+
+    makefile
+
+commit 823e1f7dd681cb5095fc92de571b39630ac9ba84
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Tue Aug 8 17:31:30 2023 +0200
+
+    updates
+
+commit 0b1d91a0076147ce47be50293a7c087b11319c78
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Fri Aug 4 09:06:02 2023 +0200
+
+    second commit
+
+commit 90b1827ebf6a0b6a8dc49868b3aa9c127926f489
+Author: Dylan Kuming <dylankuming1@gmail.com>
+Date:   Thu Aug 3 16:41:06 2023 +0200
+
+    first commit
+(END)
+
