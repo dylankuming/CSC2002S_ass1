@@ -1,6 +1,5 @@
 package MonteCarloMini;
 
-import MonteCarloMini.SearchParallel.Direction;
 
 public class TerrainArea {
 	
@@ -12,6 +11,14 @@ public class TerrainArea {
 	private int [][] visit;
 	private int grid_points_visited;
 	private int grid_points_evaluated;
+	
+	enum Direction {
+		STAY_HERE,
+	    LEFT,
+	    RIGHT,
+	    UP,
+	    DOWN
+	  }
     
 	
 	public TerrainArea(int rows, int columns, double xmin, double xmax, double ymin, double ymax) {
@@ -53,13 +60,14 @@ public class TerrainArea {
 		double x_coord = xmin + ( (xmax - xmin) / rows ) * x;
 		double y_coord = ymin + ( (ymax - ymin) / columns ) * y;
 		/* Compute function value */
-		// double value = -2 * Math.sin(x_coord) * Math.cos(y_coord/2.0) + Math.log( Math.abs(y_coord - Math.PI*2) );
+		//double value = -2 * Math.sin(x_coord) * Math.cos(y_coord/2.0) + Math.log( Math.abs(y_coord - Math.PI*2) );
 		
 		// **** NB  Rosenbrock function below can be used instead for validation ****
 		double tmp = y_coord-Math.pow(x_coord,2);
 		tmp=100.0*Math.pow(tmp,2);
 		double tmp2=Math.pow(1-x_coord,2);
 		double value = tmp2+tmp; 
+		//System.out.println(value + " at (" + x_coord + ", " + y_coord + ")");
 	
 		/* Transform to fixed point precision */
 		int fixed_point = (int)( PRECISION * value );
@@ -163,6 +171,78 @@ public class TerrainArea {
 	public double getYcoord(int y) {
 		return ymin + ( (ymax - ymin) / columns ) * y;
 	}
+
+	public class SearchInner{
+
+        private int id;				// Searcher identifier
+        private int pos_row, pos_col;	// Position in the grid
+        private int steps; //number of steps to end of search
+        private boolean stopped;			// Did the search hit a previous trail?
+        
+        private TerrainArea terrain;
+
+        public SearchInner(int id, int pos_row, int pos_col, TerrainArea terrain) {
+            this.id = id;
+            this.pos_row = pos_row; //randomly allocated
+            this.pos_col = pos_col; //randomly allocated
+            this.terrain = terrain;
+            this.stopped = false;
+        }
+        
+        public int find_valleys() {	
+            int height=Integer.MAX_VALUE;
+            Direction next = Direction.STAY_HERE;
+            while(terrain.visited(pos_row, pos_col)==0) { // stop when hit existing path
+                height=terrain.get_height(pos_row, pos_col);
+                //System.out.println("Height: " + height);
+                terrain.mark_visited(pos_row, pos_col, id); //mark current position as visited
+                steps++;
+                next = terrain.next_step(pos_row, pos_col);
+                switch(next) {
+                    case STAY_HERE: return height; //found local valley
+                    case LEFT: 
+                        //System.out.println("LEFT");
+                        pos_row--;
+                        break;
+                    case RIGHT:
+                        //System.out.println("RIGHT");
+                        pos_row=pos_row+1;
+                        break;
+                    case UP: 
+                        //System.out.println("UP");
+                        pos_col=pos_col-1;
+                        break;
+                    case DOWN: 
+                        //System.out.println("DOWN");
+                        pos_col=pos_col+1;
+                        break;
+                }
+            }
+            stopped=true;
+            //System.out.println("VALLEY (" + height + ")FOUND AT: " + pos_row + ", " + pos_col + "\n\n");
+            return height;
+        }
+
+        public int getID() {
+            return id;
+        }
+
+        public int getPos_row() {
+            return pos_row;
+        }
+
+        public int getPos_col() {
+            return pos_col;
+        }
+
+        public int getSteps() {
+            return steps;
+        }
+        public boolean isStopped() {
+            return stopped;
+        }
+
+    }
 
 
 }

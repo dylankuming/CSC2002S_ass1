@@ -2,8 +2,7 @@ package MonteCarloMini;
 
 import java.util.concurrent.RecursiveTask;
 
-import MonteCarloMini.MonteCarloMinimizationParallel.SearchInner;
-
+import MonteCarloMini.TerrainArea.SearchInner;
 
 public class SearchParallel extends RecursiveTask<int[]>{
 
@@ -14,15 +13,7 @@ public class SearchParallel extends RecursiveTask<int[]>{
     private int low;
     private int minHeight = Integer.MAX_VALUE;
 
-    enum Direction {
-		STAY_HERE,
-	    LEFT,
-	    RIGHT,
-	    UP,
-	    DOWN
-	  }
-
-    private static int SEQUENTIAL_CUTOFF = 1;
+    private static int SEQUENTIAL_CUTOFF = 10000;
 
 //    public SearchParallel(Search[] searchArray, int low, int high){
 //         this.searchArray = searchArray;
@@ -30,15 +21,16 @@ public class SearchParallel extends RecursiveTask<int[]>{
 //         this.low = low;
 //    }
 
-    public SearchParallel(SearchInner[] searches, int low, int high){
+    public SearchParallel(SearchInner[] searches, int low, int high, TerrainArea terrain){
         this.searches = searches;
         this.low = low;
         this.high = high;
+        this.terrain = terrain;
     }
-    
+
 
     protected int[] compute(){
-        int[] results = new int[2];
+        int[] results = new int[3];
         if ((high - low) <= SEQUENTIAL_CUTOFF) {
             int local_min = Integer.MAX_VALUE;
             int finder = -1;
@@ -60,8 +52,8 @@ public class SearchParallel extends RecursiveTask<int[]>{
         }
         else{
             //System.out.print("High:" + high + "\tLow:" + low);
-            SearchParallel left = new SearchParallel(searches,low, (high+low)/2);
-            SearchParallel right = new SearchParallel(searches, (high+low)/2, high);
+            SearchParallel left = new SearchParallel(searches, low, (high+low)/2, terrain);
+            SearchParallel right = new SearchParallel(searches, (high+low)/2, high, terrain);
             left.fork();
             int[] rightHeight = right.compute();
             int[] leftHeight = left.join();

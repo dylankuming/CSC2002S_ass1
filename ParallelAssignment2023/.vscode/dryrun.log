@@ -3,7 +3,6 @@ make.exe: Entering directory `c:/Users/dylan/OneDrive - University of Cape Town/
 C:\Program Files\Java\jdk-19\bin\javac -d bin/MonteCarloMini/ -cp bin/MonteCarloMini -sourcepath src/MonteCarloMini src/MonteCarloMini/TerrainArea.java
  
 C:\Program Files\Java\jdk-19\bin\javac -d bin/MonteCarloMini/ -cp bin/MonteCarloMini -sourcepath src/MonteCarloMini src/MonteCarloMini/SearchParallel.java
- 
 C:\Program Files\Java\jdk-19\bin\javac -d bin/MonteCarloMini/ -cp bin/MonteCarloMini -sourcepath src/MonteCarloMini src/MonteCarloMini/MonteCarloMinimizationParallel.java
  
 make.exe: Leaving directory `c:/Users/dylan/OneDrive - University of Cape Town/UNIVERSITY FILES/Third Year/Semester 2/CSC2002S/ParallelAssignment2023/CSC2002S_ass1/ParallelAssignment2023'

@@ -7,7 +7,7 @@ package MonteCarloMini;
 
  import MonteCarloMini.SearchParallel.Direction;
 
-public class Search {
+public class Searchsss {
 	private int id;				// Searcher identifier
 	private int pos_row, pos_col;	// Position in the grid
 	private int steps; //number of steps to end of search
