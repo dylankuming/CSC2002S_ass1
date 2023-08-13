@@ -58,10 +58,6 @@ class MonteCarloMinimizationParallel{
 		ymin=-10;
 		ymax=10;
 		searches_density = 0.25;
-
-
-
-
   
     	if(DEBUG) {
     		/* Print arguments */
@@ -115,9 +111,9 @@ class MonteCarloMinimizationParallel{
 		/* Results*/
 		int min =  myresult[0];
 		int finder = myresult[1];
-		int pos_row = searches[finder].getPos_row();
-		int pos_col = searches[finder].getPos_col();
-		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(pos_row), terrain.getYcoord(pos_col) );
+		int positionRow = searches[finder].getPos_row();
+		int positionColumn = searches[finder].getPos_col();
+		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(positionRow), terrain.getYcoord(positionColumn) );
   
     }
 
