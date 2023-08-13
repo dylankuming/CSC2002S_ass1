@@ -1,3 +1,5 @@
+https://github.com/dylankuming/CSC2002S_ass1.git
+
 C:\Users\dylan\OneDrive - University of Cape Town\UNIVERSITY FILES\Third Year\Semester 2\CSC2002S\ParallelAssignment2023\CSC2002S_ass1>git log
 commit 05e4b4be33324e6aa5f9e8613c40cec4b4f3bc0c (HEAD -> main, origin/main)
 Author: Dylan Kuming <dylankuming1@gmail.com>
