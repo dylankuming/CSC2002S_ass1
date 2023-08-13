@@ -34,26 +34,20 @@ class MonteCarloMinimization{
     	Search [] searches;		// Array of searches
     	Random rand = new Random();  //the random number generator
     	
-    	/*if (args.length!=7) {  
+    	if (args.length!=7) {  
     		System.out.println("Incorrect number of command line arguments provided.");   	
     		System.exit(0);
-    	}*/
+    	}
     	/* Read argument values */
-    	// rows = Integer.parseInt(args[0]);
-    	// columns = Integer.parseInt(args[1]);
-    	// xmin = Double.parseDouble(args[2]);
-    	// xmax = Double.parseDouble(args[3]);
-    	// ymin = Double.parseDouble(args[4]);
-    	// ymax = Double.parseDouble(args[5]);
-    	// searches_density = Double.parseDouble(args[6]);
+    	rows = Integer.parseInt(args[0]);
+    	columns = Integer.parseInt(args[1]);
+    	xmin = Double.parseDouble(args[2]);
+    	xmax = Double.parseDouble(args[3]);
+    	ymin = Double.parseDouble(args[4]);
+    	ymax = Double.parseDouble(args[5]);
+    	searches_density = Double.parseDouble(args[6]);
 
-		rows = 1000;
-    	columns = 1000;
-    	xmin = -10;
-    	xmax = 10;
-    	ymin = -10;
-    	ymax = 10;
-    	searches_density = 0.5;
+		
   
     	if(DEBUG) {
     		/* Print arguments */
