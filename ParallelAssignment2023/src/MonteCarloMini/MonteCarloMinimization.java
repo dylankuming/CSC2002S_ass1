@@ -47,7 +47,7 @@ class MonteCarloMinimization{
     	// ymax = Double.parseDouble(args[5]);
     	// searches_density = Double.parseDouble(args[6]);
 
-		rows = 10000;
+		rows = 1000;
     	columns = 1000;
     	xmin = -10;
     	xmax = 10;
@@ -73,7 +73,7 @@ class MonteCarloMinimization{
       	if(DEBUG) {
     		/* Print initial values */
     		System.out.printf("Number searches: %d\n", num_searches);
-    		//terrain.print_heights();
+    		terrain.print_heights();
     	}
     	
     	//start timer
@@ -101,21 +101,21 @@ class MonteCarloMinimization{
     	}
 
 		
-    	
-		// System.out.printf("Run parameters\n");
-		// System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
-		// System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
-		// System.out.printf("\t Search density: %f (%d searches)\n", searches_density,num_searches );
+    	System.out.println("Serial program");
+		System.out.printf("Run parameters\n");
+		System.out.printf("\t Rows: %d, Columns: %d\n", rows, columns);
+		System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
+		System.out.printf("\t Search density: %f (%d searches)\n", searches_density,num_searches );
 
-		// /*  Total computation time */
+		/*  Total computation time */
 		System.out.printf("Time: %d ms\n",endTime - startTime );
-		// int tmp=terrain.getGrid_points_visited();
-		// System.out.printf("Grid points visited: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
-		// tmp=terrain.getGrid_points_evaluated();
-		// System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
+		int tmp=terrain.getGrid_points_visited();
+		System.out.printf("Grid points visited: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
+		tmp=terrain.getGrid_points_evaluated();
+		System.out.printf("Grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp/(rows*columns*1.0))*100.0, "%");
 	
-		// /* Results*/
-		// System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(searches[finder].getPos_row()), terrain.getYcoord(searches[finder].getPos_col()) );
+		/* Results*/
+		System.out.printf("Global minimum: %d at x=%.1f y=%.1f\n\n", min, terrain.getXcoord(searches[finder].getPos_row()), terrain.getYcoord(searches[finder].getPos_col()) );
 				
     	
     }

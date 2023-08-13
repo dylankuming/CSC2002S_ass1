@@ -1,8 +1,8 @@
-JAVAC = C:\Program Files\Java\jdk-19\bin\javac
-JAVA = C:\Program Files\Java\jdk-19\bin\java
+JAVAC = /usr/bin/javac
+JAVA = /usr/bin/java
 .SUFFIXES: .java .class
 SRCDIR = src/MonteCarloMini
-BINDIR = bin/MonteCarloMini
+BINDIR = bin
 
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) -sourcepath $(SRCDIR) $<
@@ -14,7 +14,8 @@ JAVA_FILES = $(CLASSES:%.class=$(SRCDIR)/%.java)
 default: $(CLASS_FILES)
 
 clean:
-	rm $(BINDIR)/*.class
+	rm $(BINDIR)/MonteCarloMini/*.class
 
 run:
-	java -cp bin MonteCarloMinimizationParallel
+	$(JAVA) -cp $(BINDIR) MonteCarloMini.MonteCarloMinimizationParallel $(ARGS)
+
