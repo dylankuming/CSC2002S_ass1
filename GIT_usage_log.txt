@@ -3,7 +3,7 @@ commit 05e4b4be33324e6aa5f9e8613c40cec4b4f3bc0c (HEAD -> main, origin/main)
 Author: Dylan Kuming <dylankuming1@gmail.com>
 Date:   Sun Aug 13 13:14:29 2023 +0200
 
-    final.
+    final
 
 commit 1ab155edaf77cca25fcd2aa026fa8baf36843503
 Author: Dylan Kuming <dylankuming1@gmail.com>
